@@ -9,7 +9,7 @@ require('./db/connection')
 
 // import files
 const Users = require('./models/Users');
-// const Conversations = require('./models/Conversations')
+const Conversations = require('./models/Conversations')
 // const Messages = require('./models/Messages');
 // const { Socket } = require('socket.io');
 // const { emit } = require('nodemon');
@@ -85,7 +85,7 @@ app.post('/api/login', async (req, res, next) => {
                         user.save()
                         next()
                     })
-                    res.status(200).json({ user:{email:user.email,fullName:user.fullName}, token: user.token })
+                    res.status(200).json({ user: { email: user.email, fullName: user.fullName }, token: user.token })
                 }
             }
         }
@@ -93,6 +93,29 @@ app.post('/api/login', async (req, res, next) => {
         console.log(error)
     }
 })
+
+app.post('/api/conversation', async (req, res) => {
+    try {
+        const { senderId, receiverId } = req.body
+        const newConversation = new Conversations({ members: [senderId, receiverId] })
+        await newConversation.save()
+        res.status(200).send("Conversation created succesfully")
+    } catch (error) {
+        console.log("Error", error)
+    }
+})
+
+app.get('/api/conversation/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const conversations = await Conversations.find({ members: { $in: [userId] } });
+        res.status(200).json(conversations);
+
+    } catch (error) {
+        console.log(error, 'Error');
+    }
+})
+
 
 app.listen(port, () => {
     console.log('listening on port' + port);

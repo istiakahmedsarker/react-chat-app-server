@@ -9,4 +9,4 @@ const conversationSchema = mongoose.Schema({
 
 const Conversation = mongoose.model('Conversation', conversationSchema)
 
-module.exports = Users
+module.exports = Conversation
