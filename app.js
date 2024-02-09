@@ -27,7 +27,7 @@ const port = process.env.PORT || 8000;
 // socket.io
 let users = [];
 io.on('connection', socket => {
-    console.log('User connected', socket.id);
+    // console.log('User connected', socket.id);
     socket.on('addUser', userId => {
         const isUserExist = users.find(user => user.userId === userId)
         if (!isUserExist) {
@@ -133,7 +133,7 @@ app.post('/api/logIn', async (req, res, next) => {
 
     } catch (error) {
 
-        console.log(error, "Error");
+        // console.log(error, "Error");
 
     }
 })
@@ -144,7 +144,7 @@ app.post('/api/conversation', async (req, res) => {
         await newConversation.save();
         res.status(200).send('conversation created successfully')
     } catch (error) {
-        console.log(error, 'Error');
+        // console.log(error, 'Error');
 
     }
 })
@@ -163,7 +163,7 @@ app.get('/api/conversations/:userId', async (req, res) => {
         res.status(200).json(await conversationUserData);
 
     } catch (error) {
-        console.log(error, 'Error');
+        // console.log(error, 'Error');
     }
 })
 app.post('/api/message', async (req, res) => {
@@ -200,7 +200,7 @@ app.post('/api/message', async (req, res) => {
         await newMessage.save();
         res.status(200).send('Message Sent Successfully');
     } catch (error) {
-        console.log(error, 'Error');
+        // console.log(error, 'Error');
         res.status(500).send('Internal server error');
     }
 });
@@ -231,7 +231,7 @@ app.get('/api/message/:conversationId', async (req, res) => {
         }
 
     } catch (error) {
-        console.log('Error', error);
+        // console.log('Error', error);
 
     }
 });
@@ -246,7 +246,7 @@ app.get('/api/users/:userId', async (req, res) => {
         }))
         res.status(200).json(await usersData);
     } catch (error) {
-        console.log('Error', error);
+        // console.log('Error', error);
 
     }
 })
@@ -254,5 +254,5 @@ app.get('/api/users/:userId', async (req, res) => {
 
 
 app.listen(port, () => {
-    console.log('listening on port' + port);
+    // console.log('listening on port' + port);
 })
